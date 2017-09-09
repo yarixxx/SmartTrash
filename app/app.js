@@ -5,7 +5,7 @@ TrashCtrl.controller('TrashCtrl', function($scope, $mdDialog, $mdToast, $mdSiden
 
   var endpoint = "wss://jgbml2yj.api.satori.com";
   var appKey = "6Efba84ebC1628e5bcAc67BE0639BE8f";
-  var channel = "trash-channel";
+  var channel = "SmartTrash";
 
   var client = new RTM(endpoint, appKey);
   client.on('enter-connected', function () {
