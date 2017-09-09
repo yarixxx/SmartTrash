@@ -3,10 +3,9 @@
 var TrashCtrl = angular.module('TrashApp', ['ngMaterial', 'ngSanitize']);
 TrashCtrl.controller('TrashCtrl', function($scope, $mdDialog, $mdToast, $mdSidenav) {
 
-  $scope.title = 'Bart Watcher';
-  $scope.status = 'none';
-  $scope.stations = [];
-
+  $scope.reportTrashIncident = function() {
+    console.log('trash');
+  }
   var endpoint = "wss://open-data.api.satori.com";
   var appKey = "82AE48a0fAbAfCe5eB42f4617DFA6e5e";
   var channel = "trash";
