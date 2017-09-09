@@ -1,0 +1,33 @@
+<html>
+<head>
+    <title>Trash Organization</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-sanitize.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+    
+    <!-- Satori Library -->
+    <script src="https://satori-a.akamaihd.net/satori-rtm-sdk/v1.1.1/sdk.min.js"></script>
+</head>
+<body ng-app="TrashOrganization" layout="column" ng-controller="TrashOrganizationCtrl as TrashOrganizationCtrl">
+
+<md-list>
+  <md-subheader class="md-no-sticky">Avatar with Secondary Action Icon</md-subheader>
+  <md-list-item ng-repeat="trash in trashList" class="noright">
+    <md-icon class="md-avatar">delete</md-icon>
+    <p>{{ trash.who }}</p>
+  </md-list-item>
+</md-list>
+
+  <script src="organization.js"></script>
+</body>
+</html>
