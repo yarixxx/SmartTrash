@@ -23,7 +23,8 @@ TrashOrganizationCtrl.controller('TrashOrganizationCtrl', function($scope, $mdDi
 
   // Incidents
   var channelIncidents = client.subscribe('Incident', RTM.SubscriptionMode.SIMPLE, {
-    filter: 'SELECT * FROM `Incident` WHERE type = "incident"'
+    filter: 'SELECT * FROM `Incident` WHERE type = "incident"',
+    history: { count: 10 },
   });
   channelIncidents.on('enter-subscribed', function () {
     console.log('Subscribed to: ' + channelIncidents.subscriptionId);
@@ -43,13 +44,16 @@ TrashOrganizationCtrl.controller('TrashOrganizationCtrl', function($scope, $mdDi
   });
   
   // Trash Cans
-  var channelTrashCans = client.subscribe('Trashcan', RTM.SubscriptionMode.SIMPLE);
+  var channelTrashCans = client.subscribe('Trashcan', RTM.SubscriptionMode.SIMPLE, {
+    filter: 'SELECT * FROM `Trashcan` WHERE type = "trashcan" GROUP BY id',
+    history: { count: 10 },
+  });
   channelTrashCans.on('enter-subscribed', function () {
     console.log('Subscribed to: ' + channelTrashCans.subscriptionId);
   });
 
   channelTrashCans.on('rtm/subscription/data', function(pdu) {
-    console.log('pdu', $scope.trashCans.length);
+    console.log('pdu', pdu.body.messages);
     $scope.trashCans = pdu.body.messages.concat($scope.trashCans);
     if ($scope.trashCans.length > 20) {
       $scope.trashCans.splice($scope.trashCans.length - 10, 10)

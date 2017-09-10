@@ -32,14 +32,6 @@
 <md-tabs md-dynamic-height md-border-bottom>
   <md-tab label="Incident">
     <md-content class="md-padding">
-        <!--md-input-container>
-          <label>Severity</label>
-          <md-select name="type" ng-model="incidentSeverity">
-            <md-option value="high">High</md-option>
-            <md-option value="medium">Medium</md-option>
-            <md-option value="low">Low</md-option>
-          </md-select>
-        </md-input-container-->
         <md-list>
           <md-list-item ng-repeat="trash in trashIncidents" class="{{ trash.type }} {{ trash.severity }} {{ trash.volume }}">
             <md-icon class="md-avatar">delete</md-icon>
@@ -53,17 +45,10 @@
     </md-tab>
     <md-tab label="Trash Cans">
       <md-content class="md-padding">
-        <!--md-input-container>
-          <label>Severity</label>
-          <md-select name="type" ng-model="trashSeverity">
-            <md-option value="high">High</md-option>
-            <md-option value="medium">Medium</md-option>
-            <md-option value="low">Low</md-option>
-          </md-select>
-        </md-input-container-->
         <md-list>
           <md-list-item ng-repeat="trash in trashCans">
             <md-icon class="md-avatar">delete</md-icon>
+            <div flex><b>Id:</b> {{ trash.id }}</div>                                    
             <div flex><b>Time:</b> {{ trash.timestamp | date : 'mediumTime' }}</div>                        
             <div flex><b>Severity:</b> {{ trash.severity }}</div>
             <div flex><b>Volume:</b> {{ trash.volume }}</div>

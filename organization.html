@@ -48,9 +48,10 @@
         <md-list>
           <md-list-item ng-repeat="trash in trashCans">
             <md-icon class="md-avatar">delete</md-icon>
+            <div flex><b>Id:</b> {{ trash.id }}</div>                                    
             <div flex><b>Time:</b> {{ trash.timestamp | date : 'mediumTime' }}</div>                        
             <div flex><b>Severity:</b> {{ trash.severity }}</div>
-            <div flex><b>Volume:</b> {{ trash.volume }}</div>
+            <div flex><b>Volume:</b> {{ trash.volume }}%</div>
           </md-list-item>
         </md-list>
       </md-content>
