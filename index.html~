@@ -51,7 +51,9 @@
       </md-select>
     </md-input-container>
   <md-content>
-  <md-button class="md-raised md-primary" ng-disabled="canSubmit" ng-click="reportTrashIncident()">{{ reportTrashButtonTitle }}</md-button>
+  <md-button class="md-raised md-primary"
+              ng-disabled="cannotSubmit"
+              ng-click="reportTrashIncident()">Report: {{ reportTrashButtonTitle }}</md-button>
 
   <script src="app/app.js"></script>
 </body>

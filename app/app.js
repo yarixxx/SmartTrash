@@ -8,7 +8,6 @@ TrashCtrl.controller('TrashCtrl', function($scope, $mdDialog, $mdToast, $mdSiden
   $scope.severity = 'low';
   $scope.lat = 0;
   $scope.lon = 0;
-  $scope.reportTrashButtonTitle = 'Report Trash';
 
   var endpoint = "wss://jgbml2yj.api.satori.com";
   var appKey = "6Efba84ebC1628e5bcAc67BE0639BE8f";
@@ -30,11 +29,6 @@ TrashCtrl.controller('TrashCtrl', function($scope, $mdDialog, $mdToast, $mdSiden
       severity: $scope.severity
     };
     client.publish(channel, trash, function(pdu) {
-      if (pdu.action.endsWith("/ok")) {
-        $scope.reportTrashButtonTitle = "Trash is published";
-      } else {
-        $scope.reportTrashButtonTitle = "Publish request failed: " + pdu.body.error + " - " + pdu.body.reason;
-      }
       $scope.cannotSubmit = true;
       $scope.$digest();
     });
@@ -43,7 +37,6 @@ TrashCtrl.controller('TrashCtrl', function($scope, $mdDialog, $mdToast, $mdSiden
   var watchID = navigator.geolocation.watchPosition(function(position) {
     if ($scope.lat != position.coords.latitude || $scope.lon != position.coords.longitude) {
       console.log('position', $scope.lat, position.coords.latitude, $scope.lon, position.coords.longitude);
-      $scope.reportTrashButtonTitle = 'Report Trash';
       $scope.lat = position.coords.latitude;
       $scope.lon = position.coords.longitude;
       $scope.cannotSubmit = false;
