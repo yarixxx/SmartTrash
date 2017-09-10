@@ -99,9 +99,17 @@
     </style>
 </head>
 <body ng-app="TrashOrganization" layout="column" ng-controller="TrashOrganizationCtrl as TrashOrganizationCtrl">
+<md-toolbar>
+    <div class="md-toolbar-tools">
+      <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+        <md-icon>delete</md-icon>
+      </md-button>
 
+      <h2 flex md-truncate>Smart Trash Service Organization Dashboard</h2>
+    </div>
+  </md-toolbar>
 <md-tabs md-dynamic-height md-border-bottom>
-  <md-tab label="Incident">
+  <md-tab label="Incident Reports">
     <md-content class="md-padding">
         <md-input-container>
           <label>Severity</label>
@@ -132,7 +140,7 @@
           </md-list-item>
         </md-list>
     </md-tab>
-    <md-tab label="Trash Cans">
+    <md-tab label="Trash Cans Reports">
       <md-content class="md-padding">        
       </md-content>
       <md-list>
@@ -152,7 +160,7 @@
         </md-list-item>
       </md-list>
     </md-tab>
-   <md-tab label="Trash Indicator">
+   <md-tab label="Trash Indicator DEMO">
       <md-content class="md-padding">
       
         <div class="trash-bin">
