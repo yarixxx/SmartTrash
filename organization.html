@@ -38,22 +38,22 @@
         border-bottom: 2px solid white;
       }
       
+      .high .value,
       .high md-icon {
         color: #ff5400;      
       }
     
       .high {
         background: #ffeae0;
-        color: #ff5400;
       }
       
       .medium md-icon,
-      .medium {
+      .medium .value {
         color: #ffac00;
       }
       
       .low md-icon,
-      .low {
+      .low .value {
         color: #00a8ff;
       }
       
@@ -62,6 +62,7 @@
         height: 100px;
         border: 1px solid black;
       }
+
       .trash-bin-filler {
         background: gray;
       }
@@ -123,10 +124,10 @@
           <md-list-item
              ng-repeat="trash in trashIncidents" class="{{ trash.type }} {{ trash.severity }} {{ trash.volume }} row">
             <div flex style="text-align:right"></div>
-            <div flex><md-icon class="md-avatar">delete</md-icon>{{ trash.severity }}</div>
+            <div flex class="value"><md-icon class="md-avatar">delete</md-icon>{{ trash.severity }}</div>
             <div flex>{{ trash.volume }}</div>
             <div flex>{{ trash.timestamp | date : 'mediumTime' }}</div>            
-            <div flex><a href="https://www.google.com/maps/dir//{{trash.lat}},{{trash.lon}}/@{{trash.lat}},{{trash.lon}}">See on Map</a></div>
+            <div flex><md-button href="https://www.google.com/maps/dir//{{trash.lat}},{{trash.lon}}/@{{trash.lat}},{{trash.lon}}">See on Map</md-button></div>
             <div flex></div>
           </md-list-item>
         </md-list>
@@ -144,7 +145,7 @@
         </md-list-item>
         <md-list-item ng-repeat="trash in trashCans" class="{{ trash.volume > 70 ? 'high' : ''}} row">
           <div flex></div>
-          <div flex><md-icon class="md-avatar">delete</md-icon>{{ trash.id }}</div>                                    
+          <div flex class="value"><md-icon class="md-avatar">delete</md-icon>{{ trash.id }}</div>                                    
           <div flex>{{ trash.volume }}%</div>
           <div flex>{{ trash.timestamp | date : 'mediumTime' }}</div>    
           <div flex></div>                                
