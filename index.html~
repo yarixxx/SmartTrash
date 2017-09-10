@@ -53,7 +53,7 @@
   <md-content>
   <md-button class="md-raised md-primary"
               ng-disabled="cannotSubmit"
-              ng-click="reportTrashIncident()">Report: {{ reportTrashButtonTitle }}</md-button>
+              ng-click="reportTrashIncident()">Report trash</md-button>
 
   <script src="app/app.js"></script>
 </body>
