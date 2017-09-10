@@ -3,6 +3,10 @@
 var TrashOrganizationCtrl = angular.module('TrashOrganization', ['ngMaterial', 'ngSanitize']);
 TrashOrganizationCtrl.controller('TrashOrganizationCtrl', function($scope, $mdDialog, $mdToast, $mdSidenav) {
 
+  var incidentsChannel;
+
+  $scope.incidentSeverityFilter = '';
+
   $scope.incidentVolume;
   $scope.incidentSeverity;
   $scope.trashVolume;
@@ -19,30 +23,16 @@ TrashOrganizationCtrl.controller('TrashOrganizationCtrl', function($scope, $mdDi
   var client = new RTM(endpoint, appKey);
   client.on('enter-connected', function () {
     console.log('Connected to Satori RTM!');
+    incidentsChannel = subscribeToIncidents();
   });
   client.start();
 
   // Incidents
-  var channelIncidents = client.subscribe('Incident', RTM.SubscriptionMode.SIMPLE, {
-    filter: 'SELECT * FROM `Incident` WHERE type = "incident"',
-    history: { count: 10 },
-  });
-  channelIncidents.on('enter-subscribed', function () {
-    console.log('Subscribed to: ' + channelIncidents.subscriptionId);
-  });
-
-  channelIncidents.on('rtm/subscription/data', function(pdu) {
-    console.log('pdu', pdu.body.messages);
-    $scope.trashIncidents = pdu.body.messages.concat($scope.trashIncidents);
-    if ($scope.trashIncidents.length > 20) {
-      $scope.trashIncidents.splice($scope.trashIncidents.length - 10, 10)
-    }
-    $scope.$digest();
-  });
   
-  channelIncidents.on('rtm/subscribe/error', function(pdu) {
-    console.log('Error', pdu);
-  });
+  $scope.changeIncidentFilter = function() {
+    client.unsubscribe('Incident');
+    incidentsChannel = subscribeToIncidents($scope.incidentSeverityFilter)
+  }
   
   // Trash Cans
   var channelTrashCans = client.subscribe('Trashcan', RTM.SubscriptionMode.SIMPLE, {
@@ -66,4 +56,35 @@ TrashOrganizationCtrl.controller('TrashOrganizationCtrl', function($scope, $mdDi
   channelTrashCans.on('rtm/subscribe/error', function(pdu) {
     console.log('Error', pdu);
   });
+  
+  function subscribeToIncidents(incidentSeverityFilter) {
+    var sql = 'SELECT * FROM `Incident`';
+    if (incidentSeverityFilter) {
+      sql = 'SELECT * FROM `Incident` WHERE severity = "' + incidentSeverityFilter + '"';
+    }
+    
+    var channelIncidents = client.subscribe('Incident', RTM.SubscriptionMode.SIMPLE, {
+      filter: sql,
+      history: { count: 10 },
+    });
+    console.log('subscribeToIncidents')
+    channelIncidents.on('enter-subscribed', function () {
+      console.log('Subscribed to: ' + channelIncidents.subscriptionId);
+    });
+
+    channelIncidents.on('rtm/subscription/data', function(pdu) {
+      console.log('pdu', pdu.body.messages);
+      $scope.trashIncidents = pdu.body.messages.concat($scope.trashIncidents);
+      if ($scope.trashIncidents.length > 20) {
+        $scope.trashIncidents.splice($scope.trashIncidents.length - 10, 10)
+      }
+      $scope.$digest();
+    });
+   
+   
+    channelIncidents.on('rtm/subscribe/error', function(pdu) {
+      console.log('Error', pdu);
+    });
+    return channelIncidents;
+  }
 });

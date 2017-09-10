@@ -20,10 +20,15 @@
     
     <style>
       .high {
-        background: red;
+        background: #ff5400;
+        color: #ff5400;
       }
       .medium {
-        background: gray;
+        color: #ffac00;
+      }
+      
+      .low {
+        color: #00a8ff;
       }
       
       .trash-bin-img {
@@ -37,27 +42,27 @@
       
       
       .trash-bin {
-   background: #ccc;
-   width: 300px;
-   height: 300px;
-   clip-path: url(#trashContur);
-}
+         background: #ccc;
+         width: 300px;
+         height: 300px;
+         clip-path: url(#trashContur);
+      }
 
-.trash-inner {
-  position: absolute;
-   background: #fff;
-   width: 300px;
-   height: 300px;
-   clip-path: url(#trashInner);
-}
+      .trash-inner {
+        position: absolute;
+         background: #fff;
+         width: 300px;
+         height: 300px;
+         clip-path: url(#trashInner);
+      }
 
-.trash-filler {
-  position: absolute;
-  bottom: 0;
-  background:#444;
-  width:300px;
-  height:300px;
-}
+      .trash-filler {
+        position: absolute;
+        bottom: 0;
+        background:#444;
+        width:300px;
+        height:300px;
+      }
     </style>
 </head>
 <body ng-app="TrashOrganization" layout="column" ng-controller="TrashOrganizationCtrl as TrashOrganizationCtrl">
@@ -86,19 +91,27 @@
   </md-tab>
   <md-tab label="Incident">
     <md-content class="md-padding">
+        <md-input-container>
+          <label>Severity</label>
+          <md-select name="type" ng-model="incidentSeverityFilter" ng-change="changeIncidentFilter()">
+            <md-option value="high">High</md-option>
+            <md-option value="medium">Medium</md-option>
+            <md-option value="low">Low</md-option>
+          </md-select>
+        </md-input-container>
         <md-list>
           <md-list-item ng-repeat="trash in trashIncidents" class="{{ trash.type }} {{ trash.severity }} {{ trash.volume }}">
             <md-icon class="md-avatar">delete</md-icon>
-            <div flex><b>Time:</b> {{ trash.timestamp | date : 'mediumTime' }}</div>            
             <div flex><b>Severity:</b> {{ trash.severity }}</div>
             <div flex><b>Volume:</b> {{ trash.volume }}</div>
+            <div flex><b>Time:</b> {{ trash.timestamp | date : 'mediumTime' }}</div>            
             <div><a href="https://www.google.com/maps/dir//{{trash.lat}},{{trash.lon}}/@{{trash.lat}},{{trash.lon}}">See on Map</a></div>
           </md-list-item>
         </md-list>
       </md-content>
     </md-tab>
     <md-tab label="Trash Cans">
-      <md-content class="md-padding">
+      <md-content class="md-padding">        
         <md-list>
           <md-list-item ng-repeat="trash in trashCans">
             <md-icon class="md-avatar">delete</md-icon>
