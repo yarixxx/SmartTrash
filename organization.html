@@ -146,7 +146,7 @@
         <md-list-item ng-repeat="trash in trashCans" class="{{ trash.volume > 70 ? 'high' : ''}} row">
           <div flex></div>
           <div flex class="value"><md-icon class="md-avatar">delete</md-icon>{{ trash.id }}</div>                                    
-          <div flex>{{ trash.volume }}%</div>
+          <div flex>{{ trash.volume | number:0 }}%</div>
           <div flex>{{ trash.timestamp | date : 'mediumTime' }}</div>    
           <div flex></div>                                
         </md-list-item>

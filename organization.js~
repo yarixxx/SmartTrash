@@ -46,7 +46,7 @@ TrashOrganizationCtrl.controller('TrashOrganizationCtrl', function($scope, $mdDi
   channelTrashCans.on('rtm/subscription/data', function(pdu) {
     $scope.trashValue = pdu.body.messages[0].volume;
     console.log('pdu', pdu.body.messages);
-    $scope.trashCans = pdu.body.messages.concat($scope.trashCans);
+    $scope.trashCans = pdu.body.messages.concat($scope.trashCans).map(function(tc) { tc.volume = Math.round(tc.volume); return tc; });
     if ($scope.trashCans.length > 20) {
       $scope.trashCans.splice($scope.trashCans.length - 10, 10)
     }
@@ -62,6 +62,7 @@ TrashOrganizationCtrl.controller('TrashOrganizationCtrl', function($scope, $mdDi
     if (incidentSeverityFilter) {
       sql = 'SELECT * FROM `Incident` WHERE severity = "' + incidentSeverityFilter + '"';
     }
+    
     var channelIncidents = client.subscribe('Incident', RTM.SubscriptionMode.SIMPLE, {
       filter: sql,
       history: { count: 10 },
@@ -79,11 +80,8 @@ TrashOrganizationCtrl.controller('TrashOrganizationCtrl', function($scope, $mdDi
       }
       $scope.$digest();
     });
-    
-    channelIncidents.on('leave-subscribed', function () {
-      console.log('Unsubscribed from: ' + channelIncidents.subscriptionId);
-    });
-    
+   
+   
     channelIncidents.on('rtm/subscribe/error', function(pdu) {
       console.log('Error', pdu);
     });
