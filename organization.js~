@@ -23,7 +23,7 @@ TrashOrganizationCtrl.controller('TrashOrganizationCtrl', function($scope, $mdDi
 
   // Incidents
   var channelIncidents = client.subscribe('Incident', RTM.SubscriptionMode.SIMPLE, {
-    filter: 'SELECT * FROM `Incident` WHERE severity = "high"'
+    filter: 'SELECT * FROM `Incident` WHERE type = "incident"'
   });
   channelIncidents.on('enter-subscribed', function () {
     console.log('Subscribed to: ' + channelIncidents.subscriptionId);
@@ -32,6 +32,9 @@ TrashOrganizationCtrl.controller('TrashOrganizationCtrl', function($scope, $mdDi
   channelIncidents.on('rtm/subscription/data', function(pdu) {
     console.log('pdu', pdu.body.messages);
     $scope.trashIncidents = pdu.body.messages.concat($scope.trashIncidents);
+    if ($scope.trashIncidents.length > 30) {
+      $scope.trashIncidents.splice($scope.trashIncidents.length - 10, 10)
+    }
     $scope.$digest();
   });
   
@@ -40,14 +43,17 @@ TrashOrganizationCtrl.controller('TrashOrganizationCtrl', function($scope, $mdDi
   });
   
   // Trash Cans
-  var channelTrashCans = client.subscribe('TrashCan', RTM.SubscriptionMode.SIMPLE);
+  var channelTrashCans = client.subscribe('Trashcan', RTM.SubscriptionMode.SIMPLE);
   channelTrashCans.on('enter-subscribed', function () {
     console.log('Subscribed to: ' + channelTrashCans.subscriptionId);
   });
 
   channelTrashCans.on('rtm/subscription/data', function(pdu) {
-    console.log('pdu', pdu.body.messages);
+    console.log('pdu', $scope.trashCans.length);
     $scope.trashCans = pdu.body.messages.concat($scope.trashCans);
+    if ($scope.trashCans.length > 30) {
+      $scope.trashCans.splice($scope.trashCans.length - 10, 10)
+    }
     $scope.$digest();
   });
   
