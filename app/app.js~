@@ -2,6 +2,11 @@
 
 var TrashCtrl = angular.module('TrashApp', ['ngMaterial', 'ngSanitize']);
 TrashCtrl.controller('TrashCtrl', function($scope, $mdDialog, $mdToast, $mdSidenav) {
+  $scope.isTrash = true;
+  $scope.volume = 'small';
+  $scope.severity = 'low';
+  $scope.lat = 0;
+  $scope.lon = 0;
 
   var endpoint = "wss://jgbml2yj.api.satori.com";
   var appKey = "6Efba84ebC1628e5bcAc67BE0639BE8f";

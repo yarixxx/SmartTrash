@@ -5,6 +5,8 @@ TrashCtrl.controller('TrashCtrl', function($scope, $mdDialog, $mdToast, $mdSiden
   $scope.isTrash = true;
   $scope.volume = 'small';
   $scope.severity = 'low';
+  $scope.lat = 0;
+  $scope.lon = 0;
 
   var endpoint = "wss://jgbml2yj.api.satori.com";
   var appKey = "6Efba84ebC1628e5bcAc67BE0639BE8f";
@@ -38,4 +40,9 @@ TrashCtrl.controller('TrashCtrl', function($scope, $mdDialog, $mdToast, $mdSiden
       }
     });
   }
+  
+  var watchID = navigator.geolocation.watchPosition(function(position) {
+    $scope.lat = position.coords.latitude;
+    $scope.lon = position.coords.longitude;
+});
 });
