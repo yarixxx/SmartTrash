@@ -7,6 +7,7 @@ TrashOrganizationCtrl.controller('TrashOrganizationCtrl', function($scope, $mdDi
   $scope.incidentSeverity;
   $scope.trashVolume;
   $scope.trashSeverity;
+  $scope.trashValue = 0;
 
   $scope.trashIncidents = [];
   $scope.trashCans = [];
@@ -45,7 +46,7 @@ TrashOrganizationCtrl.controller('TrashOrganizationCtrl', function($scope, $mdDi
   
   // Trash Cans
   var channelTrashCans = client.subscribe('Trashcan', RTM.SubscriptionMode.SIMPLE, {
-    filter: 'SELECT * FROM `Trashcan` WHERE type = "trashcan" GROUP BY id',
+    filter: 'SELECT AVG(volume) as volume, id, timestamp, severity, FROM `Trashcan` WHERE type = "trashcan" GROUP BY id',
     history: { count: 10 },
   });
   channelTrashCans.on('enter-subscribed', function () {
@@ -53,7 +54,8 @@ TrashOrganizationCtrl.controller('TrashOrganizationCtrl', function($scope, $mdDi
   });
 
   channelTrashCans.on('rtm/subscription/data', function(pdu) {
-    console.log('pdu', $scope.trashCans.length);
+    $scope.trashValue = pdu.body.messages[0].volume;
+    console.log('pdu', pdu.body.messages);
     $scope.trashCans = pdu.body.messages.concat($scope.trashCans);
     if ($scope.trashCans.length > 20) {
       $scope.trashCans.splice($scope.trashCans.length - 10, 10)

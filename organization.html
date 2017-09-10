@@ -25,11 +25,65 @@
       .medium {
         background: gray;
       }
+      
+      .trash-bin-img {
+        width: 75px;
+        height: 100px;
+        border: 1px solid black;
+      }
+      .trash-bin-filler {
+        background: gray;
+      }
+      
+      
+      .trash-bin {
+   background: #ccc;
+   width: 300px;
+   height: 300px;
+   clip-path: url(#trashContur);
+}
+
+.trash-inner {
+  position: absolute;
+   background: #fff;
+   width: 300px;
+   height: 300px;
+   clip-path: url(#trashInner);
+}
+
+.trash-filler {
+  position: absolute;
+  bottom: 0;
+  background:#444;
+  width:300px;
+  height:300px;
+}
     </style>
 </head>
 <body ng-app="TrashOrganization" layout="column" ng-controller="TrashOrganizationCtrl as TrashOrganizationCtrl">
 
 <md-tabs md-dynamic-height md-border-bottom>
+   <md-tab label="Trash 101">
+    <md-content class="md-padding">
+    
+      <div class="trash-bin">
+<div class="trash-inner">
+  <div class="trash-filler" style="height:{{ trashValue }}%">
+  </div>
+</div>
+</div>
+
+<svg width="300" height="300">
+  <clipPath id="trashContur">
+    <path d="m 216.28857,23.996768 -81.9757,0 c 0,0 0,-7.030814 0,-9.352212 0,-5.1650482 -4.58776,-9.3522058 -10.24696,-9.3522058 -5.6592,0 -10.24696,4.1871576 -10.24696,9.3522058 0,5.165049 0,9.352212 0,9.352212 l -81.975692,0 c -11.31841,0 -20.493926,8.374315 -20.493926,18.704412 l 0,18.704411 c 0,10.330102 9.175516,18.704417 20.493926,18.704417 l 0,168.339732 c 0,10.3301 9.175516,18.70442 20.493926,18.70442 l 143.457466,0 c 11.3184,0 20.49392,-8.37432 20.49392,-18.70442 l 0,-168.339732 c 11.3184,0 20.49391,-8.374315 20.49391,-18.704417 l 0,-18.704411 c 0,-10.330097 -9.17551,-18.704412 -20.49391,-18.704412 z" />
+  </clipPath>
+  <clipPath id="trashInner">
+    <path d="m 201.83138,250.57683 c 0,5.54736 -4.94378,10.04446 -11.04214,10.04446 l -132.505708,0 c -6.098364,0 -11.042142,-4.4971 -11.042142,-10.04446 l 0,-170.755928 22.084283,0 0,150.666988 c 0,5.54736 4.943772,10.04447 11.042143,10.04447 6.098364,0 11.042142,-4.49711 11.042142,-10.04447 l 0.133543,-150.666988 21.950739,0 0,150.666988 c 0,5.54736 4.94378,10.04447 11.04214,10.04447 6.09837,0 11.04214,-4.49711 11.04214,-10.04447 l 0.13355,-150.666988 22.08427,0 -0.13353,150.666988 c 0,5.54736 4.94378,10.04447 11.04214,10.04447 6.09837,0 11.04214,-4.49711 11.04214,-10.04447 l 0,-150.666988 22.08429,0 z M 223.91566,54.709738 c 0,2.773837 -2.47171,5.022224 -5.52107,5.022224 l -187.716408,0 c -3.049363,0 -5.521077,-2.248387 -5.521077,-5.022224 l 0,-10.044469 c 0,-2.773843 2.471714,-5.022235 5.521077,-5.022235 l 187.716408,0 c 3.04936,0 5.52107,2.248392 5.52107,5.022235 z" />
+  </clipPath>
+</svg>
+
+    </md-content>
+  </md-tab>
   <md-tab label="Incident">
     <md-content class="md-padding">
         <md-list>
