@@ -15,17 +15,44 @@
     <!-- Angular Material Library -->
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
     
+    <link href="https://fonts.googleapis.com/css?family=Raleway:700" rel="stylesheet">
+    
     <!-- Satori Library -->
     <script src="https://satori-a.akamaihd.net/satori-rtm-sdk/v1.1.1/sdk.min.js"></script>
     
     <style>
+      .header {
+        background: #e3e6e8;
+        text-transform: uppercase;
+        font-family: 'Raleway', sans-serif;
+        font-size: 14px;
+        color: #666767;
+      }
+      
+      .row .md-avatar {
+        width: 24px;
+        height: 24px;
+      }
+      
+      .row {
+        border-bottom: 2px solid white;
+      }
+      
+      .high md-icon {
+        color: #ff5400;      
+      }
+    
       .high {
+        background: #ffeae0;
         color: #ff5400;
       }
+      
+      .medium md-icon,
       .medium {
         color: #ffac00;
       }
       
+      .low md-icon,
       .low {
         color: #00a8ff;
       }
@@ -62,32 +89,16 @@
         width:300px;
         height:300px;
       }
+      
+      .trash-number {
+        width: 250px;
+        text-align: center;
+      }
     </style>
 </head>
 <body ng-app="TrashOrganization" layout="column" ng-controller="TrashOrganizationCtrl as TrashOrganizationCtrl">
 
 <md-tabs md-dynamic-height md-border-bottom>
-   <md-tab label="Trash 101">
-    <md-content class="md-padding">
-    
-      <div class="trash-bin">
-<div class="trash-inner">
-  <div class="trash-filler" style="height:{{ trashValue }}%">
-  </div>
-</div>
-</div>
-
-<svg width="300" height="300">
-  <clipPath id="trashContur">
-    <path d="m 216.28857,23.996768 -81.9757,0 c 0,0 0,-7.030814 0,-9.352212 0,-5.1650482 -4.58776,-9.3522058 -10.24696,-9.3522058 -5.6592,0 -10.24696,4.1871576 -10.24696,9.3522058 0,5.165049 0,9.352212 0,9.352212 l -81.975692,0 c -11.31841,0 -20.493926,8.374315 -20.493926,18.704412 l 0,18.704411 c 0,10.330102 9.175516,18.704417 20.493926,18.704417 l 0,168.339732 c 0,10.3301 9.175516,18.70442 20.493926,18.70442 l 143.457466,0 c 11.3184,0 20.49392,-8.37432 20.49392,-18.70442 l 0,-168.339732 c 11.3184,0 20.49391,-8.374315 20.49391,-18.704417 l 0,-18.704411 c 0,-10.330097 -9.17551,-18.704412 -20.49391,-18.704412 z" />
-  </clipPath>
-  <clipPath id="trashInner">
-    <path d="m 201.83138,250.57683 c 0,5.54736 -4.94378,10.04446 -11.04214,10.04446 l -132.505708,0 c -6.098364,0 -11.042142,-4.4971 -11.042142,-10.04446 l 0,-170.755928 22.084283,0 0,150.666988 c 0,5.54736 4.943772,10.04447 11.042143,10.04447 6.098364,0 11.042142,-4.49711 11.042142,-10.04447 l 0.133543,-150.666988 21.950739,0 0,150.666988 c 0,5.54736 4.94378,10.04447 11.04214,10.04447 6.09837,0 11.04214,-4.49711 11.04214,-10.04447 l 0.13355,-150.666988 22.08427,0 -0.13353,150.666988 c 0,5.54736 4.94378,10.04447 11.04214,10.04447 6.09837,0 11.04214,-4.49711 11.04214,-10.04447 l 0,-150.666988 22.08429,0 z M 223.91566,54.709738 c 0,2.773837 -2.47171,5.022224 -5.52107,5.022224 l -187.716408,0 c -3.049363,0 -5.521077,-2.248387 -5.521077,-5.022224 l 0,-10.044469 c 0,-2.773843 2.471714,-5.022235 5.521077,-5.022235 l 187.716408,0 c 3.04936,0 5.52107,2.248392 5.52107,5.022235 z" />
-  </clipPath>
-</svg>
-
-    </md-content>
-  </md-tab>
   <md-tab label="Incident">
     <md-content class="md-padding">
         <md-input-container>
@@ -98,30 +109,69 @@
             <md-option value="low">Low</md-option>
           </md-select>
         </md-input-container>
+      </md-content>        
         <md-list>
-          <md-list-item ng-repeat="trash in trashIncidents" class="{{ trash.type }} {{ trash.severity }} {{ trash.volume }}">
-            <md-icon class="md-avatar">delete</md-icon>
-            <div flex><b>Severity:</b> {{ trash.severity }}</div>
-            <div flex><b>Volume:</b> {{ trash.volume }}</div>
-            <div flex><b>Time:</b> {{ trash.timestamp | date : 'mediumTime' }}</div>            
-            <div><a href="https://www.google.com/maps/dir//{{trash.lat}},{{trash.lon}}/@{{trash.lat}},{{trash.lon}}">See on Map</a></div>
+          <md-list-item class="header">
+            <div flex style="text-align:right"><md-icon></md-icon></div>
+            <div flex>Severity</div>
+            <div flex>Volume</div>
+            <div flex>Time</div>            
+            <div flex></div>
+            <div flex></div>
+          </md-list-item>
+          <md-list-item
+             ng-repeat="trash in trashIncidents" class="{{ trash.type }} {{ trash.severity }} {{ trash.volume }} row">
+            <div flex style="text-align:right"></div>
+            <div flex><md-icon class="md-avatar">delete</md-icon>{{ trash.severity }}</div>
+            <div flex>{{ trash.volume }}</div>
+            <div flex>{{ trash.timestamp | date : 'mediumTime' }}</div>            
+            <div flex><a href="https://www.google.com/maps/dir//{{trash.lat}},{{trash.lon}}/@{{trash.lat}},{{trash.lon}}">See on Map</a></div>
+            <div flex></div>
           </md-list-item>
         </md-list>
-      </md-content>
     </md-tab>
     <md-tab label="Trash Cans">
       <md-content class="md-padding">        
-        <md-list>
-          <md-list-item ng-repeat="trash in trashCans">
-            <md-icon class="md-avatar">delete</md-icon>
-            <div flex><b>Id:</b> {{ trash.id }}</div>                                    
-            <div flex><b>Time:</b> {{ trash.timestamp | date : 'mediumTime' }}</div>                        
-            <div flex><b>Severity:</b> {{ trash.severity }}</div>
-            <div flex><b>Volume:</b> {{ trash.volume }}%</div>
-          </md-list-item>
-        </md-list>
       </md-content>
+      <md-list>
+        <md-list-item class="header">
+          <div flex></div>
+          <div flex>Id</div>
+          <div flex>Volume</div>
+          <div flex>Time</div>      
+          <div flex></div>      
+        </md-list-item>
+        <md-list-item ng-repeat="trash in trashCans" class="{{ trash.volume > 70 ? 'high' : ''}} row">
+          <div flex></div>
+          <div flex><md-icon class="md-avatar">delete</md-icon>{{ trash.id }}</div>                                    
+          <div flex>{{ trash.volume }}%</div>
+          <div flex>{{ trash.timestamp | date : 'mediumTime' }}</div>    
+          <div flex></div>                                
+        </md-list-item>
+      </md-list>
     </md-tab>
+   <md-tab label="Trash Indicator">
+      <md-content class="md-padding">
+      
+        <div class="trash-bin">
+  <div class="trash-inner">
+    <div class="trash-filler" style="height:{{ trashValue }}%">
+    </div>
+  </div>
+  </div>
+  <div class="trash-number">{{ trashValue }}%</div>
+
+  <svg width="300" height="300">
+    <clipPath id="trashContur">
+      <path d="m 216.28857,23.996768 -81.9757,0 c 0,0 0,-7.030814 0,-9.352212 0,-5.1650482 -4.58776,-9.3522058 -10.24696,-9.3522058 -5.6592,0 -10.24696,4.1871576 -10.24696,9.3522058 0,5.165049 0,9.352212 0,9.352212 l -81.975692,0 c -11.31841,0 -20.493926,8.374315 -20.493926,18.704412 l 0,18.704411 c 0,10.330102 9.175516,18.704417 20.493926,18.704417 l 0,168.339732 c 0,10.3301 9.175516,18.70442 20.493926,18.70442 l 143.457466,0 c 11.3184,0 20.49392,-8.37432 20.49392,-18.70442 l 0,-168.339732 c 11.3184,0 20.49391,-8.374315 20.49391,-18.704417 l 0,-18.704411 c 0,-10.330097 -9.17551,-18.704412 -20.49391,-18.704412 z" />
+    </clipPath>
+    <clipPath id="trashInner">
+      <path d="m 201.83138,250.57683 c 0,5.54736 -4.94378,10.04446 -11.04214,10.04446 l -132.505708,0 c -6.098364,0 -11.042142,-4.4971 -11.042142,-10.04446 l 0,-170.755928 22.084283,0 0,150.666988 c 0,5.54736 4.943772,10.04447 11.042143,10.04447 6.098364,0 11.042142,-4.49711 11.042142,-10.04447 l 0.133543,-150.666988 21.950739,0 0,150.666988 c 0,5.54736 4.94378,10.04447 11.04214,10.04447 6.09837,0 11.04214,-4.49711 11.04214,-10.04447 l 0.13355,-150.666988 22.08427,0 -0.13353,150.666988 c 0,5.54736 4.94378,10.04447 11.04214,10.04447 6.09837,0 11.04214,-4.49711 11.04214,-10.04447 l 0,-150.666988 22.08429,0 z M 223.91566,54.709738 c 0,2.773837 -2.47171,5.022224 -5.52107,5.022224 l -187.716408,0 c -3.049363,0 -5.521077,-2.248387 -5.521077,-5.022224 l 0,-10.044469 c 0,-2.773843 2.471714,-5.022235 5.521077,-5.022235 l 187.716408,0 c 3.04936,0 5.52107,2.248392 5.52107,5.022235 z" />
+    </clipPath>
+  </svg>
+
+      </md-content>
+    </md-tab>    
   </md-tabs>
   <script src="organization.js"></script>
 </body>
