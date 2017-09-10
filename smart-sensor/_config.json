@@ -1,0 +1,60 @@
+{
+    "satori": {
+        "endpoint": "wss://hicqa49x.api.satori.com",
+        "appkey": "7Ae3B8F2a619a6A1EEBec522ACdD208F"
+    },
+    "channels": {
+        "in": "raspberry.in",
+        "out": "raspberry.out"
+    },
+    "skills": {
+        "general": {
+            "package": "satori_raspberry.skills.general",
+            "api": [
+                "cleanup", "ping", "setmode", "setup", "output", "input"
+            ]
+        },
+        "button": {
+            "package": "satori_raspberry.skills.button",
+            "api": [
+                "api_plug", "api_unplug"
+            ]
+        },
+        "temperature": {
+            "package": "satori_raspberry.skills.temperature",
+            "api": []
+        },
+        "humiture": {
+            "package": "satori_raspberry.skills.humiture",
+            "api": []
+        },
+        "led": {
+            "package": "satori_raspberry.skills.led",
+            "api": ["api_on", "api_off"]
+        },
+        "photoresistor": {
+            "package": "satori_raspberry.skills.photoresistor",
+            "api": []
+        },
+        "ir_obstacle": {
+            "package": "satori_raspberry.skills.ir_obstacle",
+            "api": []
+        },
+        "ir_controller": {
+            "package": "satori_raspberry.skills.ir_controller",
+            "api": []
+        },
+        "lcd": {
+            "package": "satori_raspberry.skills.lcd",
+            "api": []
+        },
+        "barometer": {
+            "package": "satori_raspberry.skills.barometer",
+            "api": []
+        },
+        "adc": {
+            "package": "satori_raspberry.skills.adc",
+            "api": []
+        }
+    }
+}

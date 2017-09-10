@@ -1,0 +1,14 @@
+{
+  "name": "test_mobile_web_button",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tyler Nappy",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.14.1"
+  }
+}
