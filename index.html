@@ -20,7 +20,31 @@
 </head>
 <body ng-app="TrashApp" layout="column" ng-controller="TrashCtrl as TrashCtrl">
 
-  <md-button ng-click="reportTrashIncident()">Report Trash</md-button>
+  <md-content>
+    <md-switch class="md-primary" name="special" ng-model="isTrash" required>
+      {{ isTrash ? 'Trash' : 'Recycle' }}
+    </md-switch>
+    
+    <md-input-container flex="50">
+      <label>Volume</label>
+      <md-select name="type" ng-model="volume">
+        <md-option value="large">Large</md-option>
+        <md-option value="regular">Regular</md-option>
+        <md-option value="small">Small</md-option>      
+      </md-select>
+    </md-input-container>
+    
+    <md-input-container flex="50">
+      <label>Severity</label>
+      <md-select name="type" ng-model="severity">
+        <md-option value="high">High</md-option>
+        <md-option value="medium">Medium</md-option>
+        <md-option value="low">Low</md-option>      
+      </md-select>
+    </md-input-container>
+
+    <md-button ng-click="reportTrashIncident()">Report Trash</md-button>
+  <md-content>
 
   <script src="app/app.js"></script>
 </body>

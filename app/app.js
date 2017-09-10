@@ -2,6 +2,9 @@
 
 var TrashCtrl = angular.module('TrashApp', ['ngMaterial', 'ngSanitize']);
 TrashCtrl.controller('TrashCtrl', function($scope, $mdDialog, $mdToast, $mdSidenav) {
+  $scope.isTrash = true;
+  $scope.volume = 'small';
+  $scope.severity = 'low';
 
   var endpoint = "wss://jgbml2yj.api.satori.com";
   var appKey = "6Efba84ebC1628e5bcAc67BE0639BE8f";
@@ -18,12 +21,12 @@ TrashCtrl.controller('TrashCtrl', function($scope, $mdDialog, $mdToast, $mdSiden
     var lon = -122.415987 + (Math.random() / 100);
     var trash = {
       who: "client" + Math.ceil(10*Math.random()),
-      type: "incident"
+      type: "incident",
       location: [lat, lon],
       trashData: {
-        type: (Date.now() % 2) ? "recycle" : "garbage",
-        volume: Math.ceil(10*Math.random()),
-        severity: Math.ceil(10*Math.random())
+        type: $scope.isTrash ? 'trash' : 'recycle',
+        volume: $scope.volume,
+        severity: $scope.severity
       }
     };
     client.publish(channel, trash, function(pdu) {

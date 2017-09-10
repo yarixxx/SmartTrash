@@ -18,12 +18,12 @@ TrashCtrl.controller('TrashCtrl', function($scope, $mdDialog, $mdToast, $mdSiden
     var lon = -122.415987 + (Math.random() / 100);
     var trash = {
       who: "client" + Math.ceil(10*Math.random()),
-      type: "incident"
+      type: "incident",
       location: [lat, lon],
       trashData: {
-        type: (Date.now() % 2) ? "recycle" : "garbage",
-        volume: Math.ceil(10*Math.random()),
-        severity: Math.ceil(10*Math.random())
+        type: $scope.isTrash ? 'trash' : 'recycle',
+        volume: $scope.volume,
+        severity: $scope.severity
       }
     };
     client.publish(channel, trash, function(pdu) {
