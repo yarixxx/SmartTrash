@@ -160,7 +160,7 @@
         </md-list-item>
       </md-list>
     </md-tab>
-   <md-tab label="Trash Indicator">
+   <md-tab label="Trash Indicator DEMO">
       <md-content class="md-padding">
       
         <div class="trash-bin">
