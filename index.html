@@ -47,11 +47,11 @@
       <md-select name="type" ng-model="severity">
         <md-option value="high">High</md-option>
         <md-option value="medium">Medium</md-option>
-        <md-option value="low">Low</md-option>      
+        <md-option value="low">Low</md-option>
       </md-select>
     </md-input-container>
   <md-content>
-  <md-button class="md-raised md-primary" ng-click="reportTrashIncident()">Report Trash</md-button>
+  <md-button class="md-raised md-primary" ng-disabled="cannotSubmit" ng-click="reportTrashIncident()">{{ reportTrashButtonTitle }}</md-button>
 
   <script src="app/app.js"></script>
 </body>
