@@ -21,6 +21,7 @@ TrashCtrl.controller('TrashCtrl', function($scope, $mdDialog, $mdToast, $mdSiden
   
   $scope.reportTrashIncident = function() {
     var trash = {
+      timestamp: Date.now(),
       type: "incident",
       lat: $scope.lat,
       lon: $scope.lon,

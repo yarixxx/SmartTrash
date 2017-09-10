@@ -3,7 +3,13 @@
 var TrashOrganizationCtrl = angular.module('TrashOrganization', ['ngMaterial', 'ngSanitize']);
 TrashOrganizationCtrl.controller('TrashOrganizationCtrl', function($scope, $mdDialog, $mdToast, $mdSidenav) {
 
-  $scope.trashList = [];
+  $scope.incidentVolume;
+  $scope.incidentSeverity;
+  $scope.trashVolume;
+  $scope.trashSeverity;
+
+  $scope.trashIncidents = [];
+  $scope.trashCans = [];
 
   var endpoint = "wss://jgbml2yj.api.satori.com";
   var appKey = "6Efba84ebC1628e5bcAc67BE0639BE8f";
@@ -14,19 +20,40 @@ TrashOrganizationCtrl.controller('TrashOrganizationCtrl', function($scope, $mdDi
     console.log('Connected to Satori RTM!');
   });
   client.start();
-  
-  var channel = client.subscribe(channelName, RTM.SubscriptionMode.SIMPLE);
-  channel.on('enter-subscribed', function () {
-    console.log('Subscribed to: ' + channel.subscriptionId);
+
+  // Incidents
+  var channelIncidents = client.subscribe('Incident', RTM.SubscriptionMode.SIMPLE, {
+    filter: 'SELECT * FROM `Incident` WHERE type = "incident"'
+  });
+  channelIncidents.on('enter-subscribed', function () {
+    console.log('Subscribed to: ' + channelIncidents.subscriptionId);
   });
 
-  channel.on('rtm/subscription/data', function(pdu) {
-    console.log('pdu.body.messages', pdu.body.messages);
-    $scope.trashList = pdu.body.messages.concat($scope.trashList);
+  channelIncidents.on('rtm/subscription/data', function(pdu) {
+    console.log('pdu', pdu.body.messages);
+    $scope.trashIncidents = pdu.body.messages.concat($scope.trashIncidents);
     $scope.$digest();
   });
   
-  channel.on('rtm/subscribe/error', function(pdu) {
+  channelIncidents.on('rtm/subscribe/error', function(pdu) {
+    console.log('Error', pdu);
+  });
+  
+  // Trash Cans
+  var channelTrashCans = client.subscribe('TrashCan', RTM.SubscriptionMode.SIMPLE, {
+    filter: 'SELECT * FROM `Incident` WHERE type = "trash"'
+  });
+  channelTrashCans.on('enter-subscribed', function () {
+    console.log('Subscribed to: ' + channelTrashCans.subscriptionId);
+  });
+
+  channelTrashCans.on('rtm/subscription/data', function(pdu) {
+    console.log('pdu', pdu.body.messages);
+    $scope.trashCans = pdu.body.messages.concat($scope.trashCans);
+    $scope.$digest();
+  });
+  
+  channelTrashCans.on('rtm/subscribe/error', function(pdu) {
     console.log('Error', pdu);
   });
 });

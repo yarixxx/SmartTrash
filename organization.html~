@@ -17,17 +17,58 @@
     
     <!-- Satori Library -->
     <script src="https://satori-a.akamaihd.net/satori-rtm-sdk/v1.1.1/sdk.min.js"></script>
+    
+    <style>
+      .high {
+        background: red;
+      }
+    </style>
 </head>
 <body ng-app="TrashOrganization" layout="column" ng-controller="TrashOrganizationCtrl as TrashOrganizationCtrl">
 
-<md-list>
-  <md-subheader class="md-no-sticky">Avatar with Secondary Action Icon</md-subheader>
-  <md-list-item ng-repeat="trash in trashList" class="noright">
-    <md-icon class="md-avatar">delete</md-icon>
-    <p>{{ trash.who }}</p>
-  </md-list-item>
-</md-list>
-
+<md-tabs md-dynamic-height md-border-bottom>
+  <md-tab label="Incident">
+    <md-content class="md-padding">
+        <!--md-input-container>
+          <label>Severity</label>
+          <md-select name="type" ng-model="incidentSeverity">
+            <md-option value="high">High</md-option>
+            <md-option value="medium">Medium</md-option>
+            <md-option value="low">Low</md-option>
+          </md-select>
+        </md-input-container-->
+        <md-list>
+          <md-list-item ng-repeat="trash in trashIncidents" class="{{ trash.type }} {{ trash.severity }} {{ trash.volume }}">
+            <md-icon class="md-avatar">delete</md-icon>
+            <div flex><b>Time:</b> {{ trash.timestamp | date }}</div>            
+            <div flex><b>Severity:</b> {{ trash.severity }}</div>
+            <div flex><b>Volume:</b> {{ trash.volume }}</div>
+            <div><a href="https://www.google.com/maps/dir//{{trash.lat}},{{trash.lon}}/@{{trash.lat}},{{trash.lon}}">See on Map</a></div>
+          </md-list-item>
+        </md-list>
+      </md-content>
+    </md-tab>
+    <md-tab label="Trash Cans">
+      <md-content class="md-padding">
+        <md-input-container>
+          <label>Severity</label>
+          <md-select name="type" ng-model="trashSeverity">
+            <md-option value="high">High</md-option>
+            <md-option value="medium">Medium</md-option>
+            <md-option value="low">Low</md-option>
+          </md-select>
+        </md-input-container>
+        <md-list>
+          <md-list-item ng-repeat="trash in trashCans">
+            <md-icon class="md-avatar">delete</md-icon>
+            <div flex><b>Time:</b> {{ trash.timestamp | date }}</div>                        
+            <div flex><b>Severity:</b> {{ trash.severity }}</div>
+            <div flex><b>Volume:</b> {{ trash.volume }}</div>
+          </md-list-item>
+        </md-list>
+      </md-content>
+    </md-tab>
+  </md-tabs>
   <script src="organization.js"></script>
 </body>
 </html>

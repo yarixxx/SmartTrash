@@ -24,7 +24,7 @@ TrashCtrl.controller('TrashCtrl', function($scope, $mdDialog, $mdToast, $mdSiden
       type: "incident",
       lat: $scope.lat,
       lon: $scope.lon,
-      type: $scope.isTrash ? 'trash' : 'recycle',
+      category: $scope.isTrash ? 'trash' : 'recycle',
       volume: $scope.volume,
       severity: $scope.severity
     };
